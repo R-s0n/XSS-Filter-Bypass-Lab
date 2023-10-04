@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title>Cross-Site Scripting Exercise</title>
+</head>
+<body>
+    <h1>Welcome to our website!</h1>
+    
+    <!-- Reflected DOM-Based XSS -->
+
+    <p>What is your name?</p>
+    <input type="text" id="reflectedName">
+    <button onclick="reflectedDemoOne()">Submit</button>
+    <p id="showName"></p>
+    <script>
+        function reflectedDemoOne() {
+            var reflectedInput = document.getElementById('reflectedName').value;
+            var reflectedOutput = document.getElementById('showName');
+            reflectedOutput.innerHTML = 'Welcome to our website, ' + reflectedInput + '!';
+        }
+    </script>
+
+    <br><hr><br>
+
+    <p>What is your favorite website?</p>
+    <input type="text" id="reflectedWebsite">
+    <button onclick="reflectedDemoTwo()">Submit</button>
+    <div id="showWebsite"></div>
+    <script>
+        function reflectedDemoTwo() {
+            var reflectedInput = document.getElementById('reflectedWebsite').value;
+            var reflectedOutput = document.getElementById('showWebsite');
+            reflectedOutput.innerHTML = '<a href="' + reflectedInput + '">Here is a link to your favorite website!</a>';
+        }
+    </script>
+    
+    <br><hr><br>
+
+    <!-- Stored XSS DOM-Based XSS -->
+
+    <script>
+        let storedInput = window.location.hash.replace("#","") || "Black";
+    </script>
+    <p>What is your favorite color?</p>
+    <input type="text" id="storedColor">
+    <button onclick="storedDemo()">Submit</button>
+    <p id="showColor"></p>
+    <script>
+        function storedDemo() {
+            storedInput = document.getElementById('storedColor').value;
+            var storedOutput = document.getElementById('showColor');
+            storedOutput.innerHTML = 'Thanks!  We will remember your favorite color is: ' + storedInput;
+        }
+        var storedOutput = document.getElementById('showColor');
+        storedOutput.innerHTML = "The last visitor's favorite color is: " + storedInput;
+    </script>
+    <br><hr><br>
+</body>
+</html>
