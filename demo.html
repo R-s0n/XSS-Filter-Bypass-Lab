@@ -5,7 +5,7 @@
 <body>
     <h1>Welcome to our website!</h1>
     
-    <!-- Reflected DOM-Based XSS -->
+    <!-- DOM-Based XSS | Reflected Outside Element -->
 
     <p>What is your name?</p>
     <input type="text" id="reflectedName">
@@ -20,6 +20,7 @@
     </script>
 
     <br><hr><br>
+    <!-- DOM-Based XSS | Reflected Outside Element -->
 
     <p>What is your favorite website?</p>
     <input type="text" id="reflectedWebsite">
@@ -32,10 +33,9 @@
             reflectedOutput.innerHTML = '<a href="' + reflectedInput + '">Here is a link to your favorite website!</a>';
         }
     </script>
-    
-    <br><hr><br>
 
-    <!-- Stored XSS DOM-Based XSS -->
+    <br><hr><br>
+    <!-- DOM-Based XSS | Stored XSS -->
 
     <script>
         let storedInput = window.location.hash.replace("#","") || "Black";
@@ -53,6 +53,20 @@
         var storedOutput = document.getElementById('showColor');
         storedOutput.innerHTML = "The last visitor's favorite color is: " + storedInput;
     </script>
+
     <br><hr><br>
+    <!-- DOM-Based XSS | Eval is Evil-->
+
+    <p>We built a calculator, give it a try!</p>
+    <input type="text" id="equation">
+    <button onclick="calculate()">Submit</button>
+    <p id="showAnswer"></p>
+    <script>
+        function calculate() {
+            var equationInput = document.getElementById('equation').value;
+            var answerOutput = document.getElementById('showColor');
+            alert("Answer: " + eval(equationInput));
+        }
+    </script>
 </body>
 </html>
